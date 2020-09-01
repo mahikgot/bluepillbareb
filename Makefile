@@ -7,8 +7,11 @@ ldflags +=-mcpu=$(mach) -mthumb
 ldflags +=-mfloat-abi=soft
 objs=stm32f103c8t6_startup.o
 
-all: main.elf $(objs)
+all: main.elf main.bin $(objs) 
 
+main.bin: main.elf
+	arm-none-eabi-objcopy $^ $@ -O binary
+	
 main.elf: *.ld $(objs) 
 	$(cc) $(ldflags) $(objs) -o $@ 
 
@@ -16,4 +19,7 @@ main.elf: *.ld $(objs)
 	$(cc) $(cflags) $^ -o $@
 
 clean:
-	rm -rf *.o *.elf *.map
+	rm -rf *.o *.elf *.map *.bin
+
+flash:
+	openocd -f interface/stlink.cfg -f board/stm32f103c8_blue_pill.cfg -c "program main.bin reset exit 0x08000000"
