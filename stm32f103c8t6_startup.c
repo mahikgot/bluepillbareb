@@ -45,7 +45,7 @@ void default_handler(void) {
 };
 void Reset_handler(void) {
 	uint32_t size;
-	uint32_t *pSrc;
+	uint32_t const *pSrc;
 	uint32_t *pDst;
 	
 	size = _edata - _sdata;
