@@ -1,5 +1,7 @@
 /* system exceptions only, add interrupts as needed */
 #include <stdint.h>
+
+/* retrieve section boundaries for use in copying .data and .bss section from flash into ram */
 extern uint32_t _estack[];
 extern uint32_t _sdata[];
 extern uint32_t _edata[];
@@ -20,7 +22,7 @@ void Debug_Monitor_handler(void) __attribute__ ((weak, alias("default_handler"))
 void PendSV_handler(void) __attribute__ ((weak, alias("default_handler")));
 void SysTick_handler(void) __attribute__ ((weak, alias("default_handler")));
 
-
+/* Initialize vector table into .vector_tab section. Following 10.1.2 of RM0008 */
 uint32_t vector_table[] __attribute__ ((section (".vector_tab"))) = {
 	(uint32_t) _estack,
 	(uint32_t) Reset_handler,
@@ -44,6 +46,7 @@ void default_handler(void) {
 	while(1);
 };
 void Reset_handler(void) {
+	/* Copy .data and .bss section from flash to ram */
 	uint32_t size;
 	uint32_t const *pSrc;
 	uint32_t *pDst;
@@ -51,16 +54,19 @@ void Reset_handler(void) {
 	size = _edata - _sdata;
 	pSrc = _etext;
 	pDst = _sdata;
+
 	for(uint32_t i=0; i<size; i++)
 	{
 		*pDst++ = *pSrc++;	
 	}
 
 	size = _ebss - _sbss;
+
 	for(uint32_t i=0; i<size; i++)
 	{
 		*pDst++ = 0;
 	}
 
+	/* Call main function */
 	main();
 };
