@@ -10,6 +10,6 @@ Tools used:
 
 ## Guide
 1. Use `make` to build the project. This will create all the object files and binaries into the build/ folder of the project.
-2. Use `make flash` to flash the program into your board using OpenOCD.
+2. Use `make flash` to flash the program (main.bin) into your board using OpenOCD.
 3. Use `make port` to open an OpenOCD port for debugging. I use GDB from the GNU Arm toolchain to debug. [Here's](https://hackaday.com/2012/09/27/beginners-look-at-on-chip-debugging/) a simple demonstration.
 4. Use `make clean` to delete build directory after you are done.
