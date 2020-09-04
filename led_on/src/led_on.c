@@ -14,13 +14,13 @@
 
 void gpioc_clock_enable(void)
 {
-	uint32_t *pRCC_APB2ENR = (uint32_t *) (RCC+RCC_APB2ENR_OFFSET);
+	uint32_t * const pRCC_APB2ENR = (uint32_t *) (RCC+RCC_APB2ENR_OFFSET);
 	*pRCC_APB2ENR |= 1<<4; //Section 7.3.7 of RM0008 shows that setting bit 4 of the register enables the IO port C clock
 }
 
 void pc13_output_mode_set(void)
 {
-	uint32_t *pGPIOC_CRH = (uint32_t *) (PORTC+GPIOx_CRH_OFFSET);
+	uint32_t * const pGPIOC_CRH = (uint32_t *) (PORTC+GPIOx_CRH_OFFSET);
 	/*clear involved pins for easier setting*/
 	*pGPIOC_CRH &= ~(1111UL<<20);
 	
@@ -29,7 +29,7 @@ void pc13_output_mode_set(void)
 
 void led_on(void)
 {
-	uint32_t *pGPIOC_ODR = (uint32_t *) (PORTC+GPIOx_ODR_OFFSET);
+	uint32_t * const pGPIOC_ODR = (uint32_t *) (PORTC+GPIOx_ODR_OFFSET);
 
 	/*
 	 *Looking at the schematic of the blue pill board, one would discover that the anode of the led is connected to vcc

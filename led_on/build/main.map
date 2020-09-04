@@ -1,0 +1,95 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x08000000         0x00010000         xr
+ram              0x20000000         0x00005000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+LOAD build/led_on.o
+LOAD build/stm32f103c8_startup.o
+                0x08000000                _sflash = 0x8000000
+                0x00010000                _lflash = 0x10000
+                0x20000000                _sram = 0x20000000
+                0x00005000                _lram = 0x5000
+                0x20005000                _estack = (_sram + _lram)
+
+.text           0x08000000      0x15c
+ *(.vector_tab)
+ .vector_tab    0x08000000       0x40 build/stm32f103c8_startup.o
+                0x08000000                vector_table
+ *(.text)
+ .text          0x08000040       0x90 build/led_on.o
+                0x08000040                gpioc_clock_enable
+                0x08000064                pc13_output_mode_set
+                0x08000098                led_on
+                0x080000bc                main
+ .text          0x080000d0       0x8c build/stm32f103c8_startup.o
+                0x080000d0                NMI_handler
+                0x080000d0                default_handler
+                0x080000d0                SVCall_handler
+                0x080000d0                SysTick_handler
+                0x080000d0                MemManage_handler
+                0x080000d0                HardFault_handler
+                0x080000d0                Debug_Monitor_handler
+                0x080000d0                PendSV_handler
+                0x080000d0                UsageFault_handler
+                0x080000d0                BusFault_handler
+                0x080000d6                Reset_handler
+ *(.rodata)
+                0x0800015c                . = ALIGN (0x4)
+                0x0800015c                _etext = .
+
+.glue_7         0x0800015c        0x0
+ .glue_7        0x0800015c        0x0 linker stubs
+
+.glue_7t        0x0800015c        0x0
+ .glue_7t       0x0800015c        0x0 linker stubs
+
+.vfp11_veneer   0x0800015c        0x0
+ .vfp11_veneer  0x0800015c        0x0 linker stubs
+
+.v4_bx          0x0800015c        0x0
+ .v4_bx         0x0800015c        0x0 linker stubs
+
+.iplt           0x0800015c        0x0
+ .iplt          0x0800015c        0x0 build/led_on.o
+
+.rel.dyn        0x0800015c        0x0
+ .rel.iplt      0x0800015c        0x0 build/led_on.o
+
+.data           0x20000000        0x0 load address 0x0800015c
+                0x20000000                _sdata = .
+ *(.data)
+ .data          0x20000000        0x0 build/led_on.o
+ .data          0x20000000        0x0 build/stm32f103c8_startup.o
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _edata = .
+
+.igot.plt       0x20000000        0x0 load address 0x0800015c
+ .igot.plt      0x20000000        0x0 build/led_on.o
+
+.bss            0x20000000        0x0 load address 0x0800015c
+                0x20000000                _sbss = .
+ *(.bss)
+ .bss           0x20000000        0x0 build/led_on.o
+ .bss           0x20000000        0x0 build/stm32f103c8_startup.o
+ *(COMMON)
+                0x20000000                . = ALIGN (0x4)
+                0x20000000                _ebss = .
+OUTPUT(build/main.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x4c
+ .comment       0x00000000       0x4c build/led_on.o
+                                 0x4d (size before relaxing)
+ .comment       0x0000004c       0x4d build/stm32f103c8_startup.o
+
+.ARM.attributes
+                0x00000000       0x2d
+ .ARM.attributes
+                0x00000000       0x2d build/led_on.o
+ .ARM.attributes
+                0x0000002d       0x2d build/stm32f103c8_startup.o
