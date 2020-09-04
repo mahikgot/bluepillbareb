@@ -17,7 +17,7 @@ OOCDINTCONF	= stlink.cfg
 
 #Compiler options
 
-CFLAGS		= -c -mcpu=$(MACH) -mthumb -std=gnu11 -O0 -Wall -I$(INCDIR)
+CFLAGS		= -c -mcpu=$(MACH) -mthumb -std=gnu11 -O0 -Wall -I$(INCDIR) -g
 
 #Linker file
 
@@ -30,7 +30,7 @@ LDFLAGS		+= -Wl,-Map=$(BUILDDIR)/main.map			#produces .map file, useful to see m
 LDFLAGS 	+= -nostdlib						#no standard system startup files and only the libraries you specify are passed to the linker
 LDFLAGS 	+= -mcpu=$(MACH) -mthumb				#specifies target arm processor and specifies assembler to assemble thumb instructions
 LDFLAGS 	+= -mfloat-abi=soft					#specifies software float computation since stm32f103c8 does not have floating point unit
-
+LDFLAGS		+= -g							#add debug symbols to output file
 #Objects files generated from .c files in src/
 
 OBJECTS 	= $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(wildcard $(SRCDIR)/*.c))
