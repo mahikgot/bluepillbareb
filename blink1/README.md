@@ -1,2 +1,2 @@
-# Template
-Use this template to create your own projects.
+# bad blink
+Inefficient blink implementation
