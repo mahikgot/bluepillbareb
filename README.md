@@ -11,5 +11,5 @@ Tools used:
 ## Guide
 1. Use `make` to build the project. This will create all the object files and binaries into the build/ folder of the project.
 2. Use `make flash` to flash the program into your board using OpenOCD.
-3. Use `make port` to open an OpenOCD port for debugging. I use gdb from the gnu arm toolchain to debug. I suggest using this [guide](https://stackoverflow.com/questions/38033130/how-to-use-the-gdb-gnu-debugger-and-openocd-for-microcontroller-debugging-fr).
+3. Use `make port` to open an OpenOCD port for debugging. I use GDB from the GNU Arm toolchain to debug. I suggest using this [guide](https://stackoverflow.com/questions/38033130/how-to-use-the-gdb-gnu-debugger-and-openocd-for-microcontroller-debugging-fr).
 4. Use `make clean` to delete build directory after you are done.
