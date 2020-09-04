@@ -33,8 +33,7 @@ void led_on(void)
 
 	/*
 	 *Looking at the schematic of the blue pill board, one would discover that the anode of the led is connected to vcc
-	 *while the cathode is connected to PC13.
-	 *Pulling the cathode low would cause the led to light up because of the voltage between the diode.
+	 *while the cathode is connected to PC13. Pulling the cathode low would cause the led to light up because of the voltage between the diode.
 	*/
 	*pGPIOC_ODR &= ~(1UL<<13); //Section 9.2.4 of RM0008
 }
