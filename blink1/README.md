@@ -1,2 +1,2 @@
-# bad blink
-Inefficient blink implementation
+# software blink
+blink implementation using sofware delay
