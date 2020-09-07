@@ -20,7 +20,7 @@
 #define STK_LOAD_OFFSET 	0x04
 #define STK_VAL_OFFSET 		0x08
 
-
+#define DELAY_MS_HEX 0x7A0E18 //must not exceed 0xFFFFFF
 volatile uint8_t toggle = 1;
 
 void systick_init(void)
@@ -29,8 +29,8 @@ void systick_init(void)
 	uint32_t * const pSTK_LOAD = (uint32_t *) (SYSTICK+STK_LOAD_OFFSET);
 	uint32_t * const pSTK_VAL = (uint32_t *) (SYSTICK+STK_VAL_OFFSET);
 
-	*pSTK_LOAD |= 0x7A0E18; 		//set load and val value such that an interrupt will be triggered every 1125 milliseconds
-	*pSTK_VAL |= 0x7A0E18;
+	*pSTK_LOAD |= DELAY_MS_HEX; 	//set load and val value such that an interrupt will be triggered every DELAY_MS_HEX milliseconds
+	*pSTK_VAL |= DELAY_MS_HEX;		//formula: DELAY_MS_HEX = (SysTick Clock * desired time delay in ms) - 1
 	*pSTK_CTRL |= 0x7; 				//enable systick and interrupt request, and selected processor clock as systick clock
 }
 
