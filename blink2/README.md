@@ -1,2 +1,2 @@
 # software blink
-blink implementation using sofware delay
+blink implementation using systick timer
