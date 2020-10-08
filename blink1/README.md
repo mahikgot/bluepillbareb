@@ -1,2 +1,2 @@
-# software blink
-blink implementation using sofware delay
+# Template
+Use this template to create your own projects.

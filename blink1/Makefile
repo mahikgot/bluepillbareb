@@ -1,23 +1,23 @@
 #Tools used
 
 CC 		= arm-none-eabi-gcc
-OBJ 		= arm-none-eabi-objcopy
+OBJ 	= arm-none-eabi-objcopy
 
 #Directories
 
 SRCDIR 		= src
-INCDIR 		= .
+INCDIR 		= include
 BUILDDIR 	= build
 
 #Machine dependent variables
 
-MACH		= cortex-m3
+MACH			= cortex-m3
 OOCDMACHCONF	= stm32f103c8_blue_pill.cfg
-OOCDINTCONF	= stlink.cfg
+OOCDINTCONF		= stlink.cfg
 
 #Compiler options
 
-CFLAGS		= -c -mcpu=$(MACH) -mthumb -std=gnu11 -O0 -Wall -I$(INCDIR) -g
+CFLAGS		= -c -mcpu=$(MACH) -mthumb -std=gnu11 -O0 -I$(INCDIR) -g
 
 #Linker file
 
@@ -31,13 +31,13 @@ LDFLAGS 	+= -nostdlib						#no standard system startup files and only the librar
 LDFLAGS 	+= -mcpu=$(MACH) -mthumb				#specifies target arm processor and specifies assembler to assemble thumb instructions
 LDFLAGS 	+= -mfloat-abi=soft					#specifies software float computation since stm32f103c8 does not have floating point unit
 LDFLAGS		+= -g							#add debug symbols to output file
-#Objects files generated from .c files in src/
+#Objects files generated from .c files in src/ and include/
 
 OBJECTS 	= $(patsubst $(SRCDIR)/%.c,$(BUILDDIR)/%.o,$(wildcard $(SRCDIR)/*.c))
 
 #Commands
 
-all: dir $(BUILDDIR)/main.elf $(BUILDDIR)/main.bin $(OBJECTS) 
+all: dir $(BUILDDIR)/main.elf $(BUILDDIR)/main.bin $(OBJECTS)
 
 dir:
 	mkdir -p $(BUILDDIR)
@@ -45,11 +45,12 @@ dir:
 $(BUILDDIR)/main.bin: $(BUILDDIR)/main.elf
 	$(OBJ) $^ $@ -O binary
 	
-$(BUILDDIR)/main.elf: $(LINKER) $(OBJECTS) 
+$(BUILDDIR)/main.elf: $(LINKER) $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $@ 
 
-$(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c
+$(OBJECTS): $(BUILDDIR)/%.o: $(SRCDIR)/%.c 
 	$(CC) $(CFLAGS) $^ -o $@
+
 
 clean:
 	rm -rf $(BUILDDIR)
