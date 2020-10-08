@@ -1,2 +1,2 @@
-# Template
-Use this template to create your own projects.
+# blink2
+led blink using systick timer
