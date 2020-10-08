@@ -1,2 +1,2 @@
-# systick blink
-blink implementation using systick timer
+# Template
+Use this template to create your own projects.
