@@ -5,7 +5,7 @@
 
 void RCC_GPIOx_enable(volatile GPIO_s* GPIOx)
 {
-	switch((uint32_t) &(GPIOC->CRL))
+	switch((uint32_t) &(GPIOx->CRL))
 	{
 		case 0x40010800:
 			RCC->APB2ENR |= 0x1<<2;
