@@ -1,2 +1,2 @@
-# Template
-Use this template to create your own projects.
+#infrared counter
+counts the times infrared detects something and outputs into seven segment display
